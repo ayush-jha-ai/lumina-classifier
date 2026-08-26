@@ -89,7 +89,7 @@ Running the hybrid classifier on this produces:
 
 Every field here is resolved by the deterministic rule layer (`source:
 "rule"`) — no API call needed. `source` flips to `"llm"` only for steps the
-rule layer couldn't place, so you can always see which classifications are
+rule layer couldn't place, making it always clear which classifications are
 guaranteed-traceable and which came from the model's judgment.
 
 ## Usage
@@ -148,7 +148,8 @@ The two misses are intentional: the gold set includes process errors that
 aren't in the hand-authored error-pattern library, specifically to
 demonstrate what the rule-only tier can't catch on its own — that gap is
 exactly what the hybrid tier's LLM fallback exists to close. Nothing here
-is cherry-picked to look good; run it yourself and read the mismatches.
+is cherry-picked to look good — the eval command above reproduces this
+exact report, mismatches included.
 
 No fine-tuned model, and no change to the hybrid tier's rule layer, is
 meant to ship without first beating this baseline on a held-out set —
@@ -159,12 +160,12 @@ that gate is the point of `classifier/eval/`, not an afterthought.
 `classifier/finetune/train_lora.py` is real, runnable code, but it refuses
 to run below **1,000 labelled examples** (per the design plan's own rule —
 fewer than that and a fine-tune overfits and lands worse than the hybrid
-tier above it). You currently have 8 gold examples, so this is documented
-for when there's enough pilot data, not something to run today.
+tier above it). The gold set currently has 8 examples, so this is
+documented for when there's enough pilot data, not something to run today.
 
 ```bash
-# 1. Grow data/gold/ via distill.py + human correction until you clear
-#    the threshold (see "Where the real data moat comes from" below).
+# 1. Grow data/gold/ via distill.py + human correction until the
+#    threshold is cleared (see "Where the real data moat comes from" below).
 
 # 2. Format gold examples into training pairs
 python -m classifier.finetune.format_sft_data \
