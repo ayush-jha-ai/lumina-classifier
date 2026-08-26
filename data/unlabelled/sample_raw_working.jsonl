@@ -1,0 +1,2 @@
+{"question_id": "gcse-sim-eq-001", "student_id": "pilot-001", "steps": [{"step_index": 1, "content": "3x = 14"}, {"step_index": 2, "content": "x = 4.67"}]}
+{"question_id": "gcse-quad-fac-001", "student_id": "pilot-002", "steps": [{"step_index": 1, "content": "x = (-2 +/- sqrt(4+60))/2"}, {"step_index": 2, "content": "x = 3 or x = -5"}]}

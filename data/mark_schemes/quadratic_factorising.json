@@ -1,0 +1,31 @@
+{
+  "question_id": "gcse-quad-fac-001",
+  "question_text": "Solve x^2 + 2x - 15 = 0 by factorising",
+  "topic": "quadratic_factorising",
+  "total_marks": 2,
+  "paths": [
+    {
+      "path_id": "factorise",
+      "label": "Factorise into two linear brackets",
+      "steps": [
+        {
+          "code": "M1",
+          "description": "Factorise into two linear brackets using a factor pair of -15 that sums to 2",
+          "expected_forms": ["(x+5)(x-3)=0", "(x-3)(x+5)=0"],
+          "error_patterns": [
+            { "match": "(x-5)(x+3)=0", "reason": "Used the correct factor pair (5 and -3) but with the signs swapped." },
+            { "match": "(x+3)(x-5)=0", "reason": "Picked a factor pair of -15 that doesn't sum to 2 (3 and -5 sum to -2, not 2)." }
+          ]
+        },
+        {
+          "code": "A1",
+          "description": "State both solutions",
+          "expected_forms": ["x=-5,x=3", "x=3,x=-5"],
+          "error_patterns": [
+            { "match": "x=5,x=-3", "reason": "Kept the sign from inside each bracket instead of flipping it when setting each factor to zero." }
+          ]
+        }
+      ]
+    }
+  ]
+}

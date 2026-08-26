@@ -1,0 +1,41 @@
+{
+  "question_id": "gcse-sim-eq-001",
+  "question_text": "Solve the simultaneous equations: 2x + y = 10 and x - y = 2",
+  "topic": "simultaneous_equations",
+  "total_marks": 3,
+  "paths": [
+    {
+      "path_id": "elimination-add",
+      "label": "Add the equations to eliminate y",
+      "steps": [
+        {
+          "code": "M1",
+          "description": "Add the two equations to eliminate y",
+          "expected_forms": ["3x=12"],
+          "error_patterns": [
+            { "match": "3x=8", "reason": "Added the right-hand sides incorrectly (10 + 2 miscalculated as 8)." },
+            { "match": "x=12", "reason": "Eliminated y correctly but dropped the coefficient of x before solving." }
+          ]
+        },
+        {
+          "code": "A1",
+          "description": "Divide both sides by 3 to find x",
+          "expected_forms": ["x=4"],
+          "error_patterns": [
+            { "match": "x=36", "reason": "Multiplied by 3 instead of dividing." },
+            { "match": "x=9", "reason": "Subtracted 3 instead of dividing by it." }
+          ]
+        },
+        {
+          "code": "A1",
+          "description": "Substitute x = 4 into one original equation to find y",
+          "expected_forms": ["y=2", "8+y=10,y=2"],
+          "error_patterns": [
+            { "match": "y=6", "reason": "Substituted x = 4 into x - y = 2 but made a sign error solving for y." },
+            { "match": "y=14", "reason": "Added instead of subtracted when isolating y." }
+          ]
+        }
+      ]
+    }
+  ]
+}
