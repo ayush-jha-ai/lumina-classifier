@@ -1,0 +1,11 @@
+# Extra dependencies for classifier/finetune/train_lora.py — not in the
+# base requirements.txt so installing this repo doesn't pull a multi-GB ML
+# stack unless you're actually training. Versions are floors, not pins;
+# sanity-check train_lora.py's call shapes against whatever you resolve to.
+transformers>=4.44
+peft>=0.12
+trl>=0.10
+bitsandbytes>=0.43
+datasets>=2.20
+accelerate>=0.33
+torch

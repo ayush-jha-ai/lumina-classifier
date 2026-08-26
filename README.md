@@ -29,7 +29,7 @@ cases go to an LLM that gets the full submission as context.
 |---|---|---|---|
 | **Baseline** | A single prompted call to Claude classifies every step of a submission at once, so the model can use the rest of the working to resolve ambiguity. | [`classifier/baseline.py`](classifier/baseline.py) | Working, needs an API key |
 | **Hybrid** *(production path)* | A deterministic rule layer (exact-match against the mark scheme's expected forms and a library of known error patterns) resolves what it can for free and with full interpretability; anything it can't resolve is batched and handed to the baseline model. | [`classifier/extraction.py`](classifier/extraction.py) | Working — this is the version meant to ship |
-| **Fine-tuned** | A small open model (e.g. Qwen2.5-7B) fine-tuned on real labelled submissions once there's enough of them (~1,000+). | [`classifier/finetune/`](classifier/finetune) | Recipe documented, not yet trained — no fine-tune ships until it beats the hybrid tier on held-out data |
+| **Fine-tuned** | A small open model (e.g. Qwen2.5-7B) fine-tuned on real labelled submissions once there's enough of them (~1,000+). | [`classifier/finetune/`](classifier/finetune) ([`train_lora.py`](classifier/finetune/train_lora.py)) | Script written and gated on data volume, not yet trained (no GPU/data here) — no fine-tune ships until it beats the hybrid tier on held-out data |
 
 The hybrid tier is deliberately not "just call an LLM on everything": every
 rule-resolved classification traces back to an explicit, auditable rule a
