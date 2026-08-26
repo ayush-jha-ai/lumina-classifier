@@ -154,6 +154,36 @@ No fine-tuned model, and no change to the hybrid tier's rule layer, is
 meant to ship without first beating this baseline on a held-out set —
 that gate is the point of `classifier/eval/`, not an afterthought.
 
+## Training the fine-tuned tier
+
+`classifier/finetune/train_lora.py` is real, runnable code, but it refuses
+to run below **1,000 labelled examples** (per the design plan's own rule —
+fewer than that and a fine-tune overfits and lands worse than the hybrid
+tier above it). You currently have 8 gold examples, so this is documented
+for when there's enough pilot data, not something to run today.
+
+```bash
+# 1. Grow data/gold/ via distill.py + human correction until you clear
+#    the threshold (see "Where the real data moat comes from" below).
+
+# 2. Format gold examples into training pairs
+python -m classifier.finetune.format_sft_data \
+  --gold data/gold/gold_examples.jsonl --output data/sft/train.jsonl
+
+# 3. Train (heavy deps kept out of the base install on purpose)
+pip install -r classifier/finetune/requirements-finetune.txt
+python -m classifier.finetune.train_lora \
+  --train data/sft/train.jsonl --output-dir models/lumina-lora
+
+# 4. Gate: it only ships once it beats --engine hybrid on held-out gold data
+```
+
+Default base model is `Qwen2.5-7B-Instruct`, fine-tuned via QLoRA (4-bit,
+`peft` + `trl`'s `SFTTrainer`). Full rationale and tunable flags in
+[`classifier/finetune/README.md`](classifier/finetune/README.md) — including
+the honest caveat that this script hasn't been run end-to-end (no GPU, no
+data yet), only sanity-checked as far as possible without either.
+
 ## Project layout
 
 ```
@@ -164,7 +194,7 @@ classifier/
   distill.py            generates first-pass labels for unlabelled data
   rate_limit.py          throttles outgoing API calls (see below)
   eval/                  accuracy / confusion matrix / precision-recall harness
-  finetune/               fine-tuning recipe + SFT data formatter
+  finetune/               train_lora.py, SFT data formatter, recipe
 data/
   mark_schemes/       hand-authored mark schemes (JSON)
   gold/                hand-labelled ground truth
